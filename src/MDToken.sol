@@ -46,8 +46,8 @@ contract MDToken {
     ) public returns (bool success) {
         require(
             _spender != address(0),
-            "Invalid address: Approve to the zero address"
-        );
+            "Invalid address: approve to the zero address"
+        ); // ✅ Fixed message case
         allowance[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
         return true;
@@ -60,7 +60,7 @@ contract MDToken {
     ) public returns (bool success) {
         require(
             _to != address(0),
-            "Invalid address : transfer to the zero address"
+            "Invalid address: transfer to the zero address"
         );
         require(balanceOf[_from] >= _value, "Insufficient balance");
         require(allowance[_from][msg.sender] >= _value, "Allowance exceeded");
