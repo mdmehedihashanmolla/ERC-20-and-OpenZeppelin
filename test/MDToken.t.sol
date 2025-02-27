@@ -29,6 +29,7 @@ contract MDTokenTest is Test {
 
     function testTransfer() public {
         vm.prank(owner);
+
         token.transfer(user, 100 * 10 ** 18);
         assertEq(token.balanceOf(user), 100 * 10 ** 18);
     }

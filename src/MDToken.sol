@@ -11,11 +11,7 @@ contract MDToken {
     mapping(address => mapping(address => uint256)) public allowance;
 
     event Transfer(address indexed from, address indexed to, uint256 value);
-    event Approval(
-        address indexed owner,
-        address indexed spender,
-        uint256 value
-    );
+    event Approval(address indexed owner, address indexed spender, uint256 value);
     event Mint(address indexed to, uint256 value);
 
     constructor(uint256 _initialSupply) {
@@ -25,14 +21,8 @@ contract MDToken {
         emit Transfer(address(0), msg.sender, totalSupply);
     }
 
-    function transfer(
-        address _to,
-        uint256 _value
-    ) public returns (bool success) {
-        require(
-            _to != address(0),
-            "Invalid address: transfer to the zero address"
-        );
+    function transfer(address _to, uint256 _value) public returns (bool success) {
+        require(_to != address(0), "Invalid address: transfer to the zero address");
         require(balanceOf[msg.sender] >= _value, "Insufficient balance");
         balanceOf[msg.sender] -= _value;
         balanceOf[_to] += _value;
@@ -40,28 +30,15 @@ contract MDToken {
         return true;
     }
 
-    function approve(
-        address _spender,
-        uint256 _value
-    ) public returns (bool success) {
-        require(
-            _spender != address(0),
-            "Invalid address: approve to the zero address"
-        ); // ✅ Fixed message case
+    function approve(address _spender, uint256 _value) public returns (bool success) {
+        require(_spender != address(0), "Invalid address: approve to the zero address"); // ✅ Fixed message case
         allowance[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
         return true;
     }
 
-    function transferFrom(
-        address _from,
-        address _to,
-        uint256 _value
-    ) public returns (bool success) {
-        require(
-            _to != address(0),
-            "Invalid address: transfer to the zero address"
-        );
+    function transferFrom(address _from, address _to, uint256 _value) public returns (bool success) {
+        require(_to != address(0), "Invalid address: transfer to the zero address");
         require(balanceOf[_from] >= _value, "Insufficient balance");
         require(allowance[_from][msg.sender] >= _value, "Allowance exceeded");
         balanceOf[_from] -= _value;
